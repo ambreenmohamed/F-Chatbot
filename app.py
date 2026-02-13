@@ -12,110 +12,126 @@ try:
 except ImportError:
     get_rag_chain = None
 
-# Custom CSS for Valentine's theme
+# Custom CSS for Premium Valentine's Theme
 st.markdown("""
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Pacifico&display=swap');
+
     /* Main Background */
     .stApp {
-        background: linear-gradient(135deg, #fff0f5 0%, #ffe6e6 100%);
+        background: radial-gradient(circle at top left, #ff9a9e 0%, #fecfef 100%);
+        font-family: 'Outfit', sans-serif;
     }
     
+    /* Overlay to ensure readability */
+    .main-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        z-index: -1;
+    }
+
     /* Titles */
     h1 {
-        color: #d63384;
-        font-family: 'Brush Script MT', cursive;
+        color: #c9184a !important;
+        font-family: 'Pacifico', cursive !important;
         text-align: center;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        font-size: 3.5rem !important;
+        padding-top: 1rem !important;
+        text-shadow: 2px 2px 10px rgba(255, 75, 110, 0.3);
     }
     
-    /* Captions */
-    .stCaption {
-        color: #a64d79;
+    /* Captions/Subtitle - FORCE VISIBILITY */
+    .stCaption, .custom-subtitle {
+        color: #800f2f !important;
         text-align: center;
-        font-style: italic;
+        font-weight: 600 !important;
+        font-size: 1.1rem !important;
+        background: rgba(255, 255, 255, 0.4);
+        padding: 10px;
+        border-radius: 15px;
+        margin-bottom: 2rem !important;
+        display: block;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid rgba(255, 255, 255, 0.5);
     }
     
-    /* Chat Messages */
+    /* Chat Container */
+    [data-testid="stChatMessageContainer"] {
+        padding: 1rem;
+    }
+
+    /* Chat Messages - Glassmorphism */
     .stChatMessage {
-        background-color: transparent;
-    }
-    
-    /* User Message */
-    .stChatMessage[data-testid="stChatMessage"]:nth-child(odd) {
-        background-color: rgba(255, 255, 255, 0.6);
-        border-radius: 20px;
-        padding: 10px;
-        border: 1px solid #ffcccc;
-    }
-    
-    /* AI Message */
-    .stChatMessage[data-testid="stChatMessage"]:nth-child(even) {
-        background-color: rgba(255, 240, 245, 0.8);
-        border-radius: 20px;
-        padding: 10px;
-        border: 1px solid #ffb3d9;
-    }
-    
-    /* Input Box */
-    .stChatInput {
         border-radius: 20px !important;
-        border-color: #ffb3d9 !important;
+        margin-bottom: 15px !important;
+        padding: 15px !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    /* User Message (Human) */
+    .stChatMessage[data-testid="stChatMessage"]:nth-child(odd) {
+        background: rgba(255, 255, 255, 0.7) !important;
+        border-left: 5px solid #ff4d6d !important;
     }
     
-    /* Sidebar */
-    .css-1d391kg {
-        background-color: #fff0f5;
+    /* AI Message (Robot) */
+    .stChatMessage[data-testid="stChatMessage"]:nth-child(even) {
+        background: rgba(255, 182, 193, 0.4) !important;
+        border-right: 5px solid #ff758f !important;
     }
-    
-    /* Mobile Responsiveness */
+
+    /* Force text color for messages */
+    .stChatMessage p, .stChatMessage span, .stChatMessage div {
+        color: #4a0416 !important;
+        font-weight: 400 !important;
+    }
+
+    /* Avatar Icons */
+    [data-testid="stChatMessageAvatarIcon"] {
+        background-color: #ff4d6d !important;
+        color: white !important;
+    }
+
+    /* Input Box styling */
+    .stChatInputContainer {
+        border-radius: 30px !important;
+        background: rgba(255, 255, 255, 0.8) !important;
+        border: 2px solid #ff4d6d !important;
+    }
+
+    /* Sidebar Styling */
+    [data-testid="stSidebar"] {
+        background-color: rgba(255, 192, 203, 0.3) !important;
+        backdrop-filter: blur(15px);
+    }
+
+    /* Mobile Tweaks */
     @media (max-width: 768px) {
         h1 {
-            font-size: 1.5rem !important;
+            font-size: 2.2rem !important;
         }
-        
+        .custom-subtitle {
+            font-size: 0.95rem !important;
+            width: 90%;
+        }
         .stChatMessage {
-            padding: 8px !important;
-            font-size: 0.9rem !important;
-            color: #333333 !important;
-        }
-        
-        .stChatInput {
-            font-size: 0.9rem !important;
-        }
-        
-        /* Ensure sidebar doesn't take too much space on mobile */
-        [data-testid="stSidebar"] {
-            min-width: 250px !important;
-        }
-        
-        /* Fix text color in chat messages */
-        .stChatMessage p, .stChatMessage div {
-            color: #333333 !important;
-        }
-    }
-    
-    /* Very small screens (phones in portrait) */
-    @media (max-width: 480px) {
-        h1 {
-            font-size: 1.2rem !important;
-        }
-        
-        .stChatMessage {
-            padding: 6px !important;
-            font-size: 0.85rem !important;
-            color: #333333 !important;
-        }
-        
-        /* Fix text color in chat messages */
-        .stChatMessage p, .stChatMessage div {
-            color: #333333 !important;
+            padding: 10px !important;
         }
     }
 </style>
+<div class="main-overlay"></div>
 """, unsafe_allow_html=True)
 
 st.title("💖 Our Love Story 💖")
-st.caption("Ask me anything about your conversations together!")
+st.markdown('<p class="custom-subtitle">✨ Ask me anything about your conversations together! ✨</p>', unsafe_allow_html=True)
 
 # Initialize session state
 if "chat_history" not in st.session_state:
