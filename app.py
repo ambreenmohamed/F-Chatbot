@@ -66,6 +66,39 @@ st.markdown("""
     .css-1d391kg {
         background-color: #fff0f5;
     }
+    
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 1.5rem !important;
+        }
+        
+        .stChatMessage {
+            padding: 8px !important;
+            font-size: 0.9rem !important;
+        }
+        
+        .stChatInput {
+            font-size: 0.9rem !important;
+        }
+        
+        /* Ensure sidebar doesn't take too much space on mobile */
+        [data-testid="stSidebar"] {
+            min-width: 250px !important;
+        }
+    }
+    
+    /* Very small screens (phones in portrait) */
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 1.2rem !important;
+        }
+        
+        .stChatMessage {
+            padding: 6px !important;
+            font-size: 0.85rem !important;
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
 

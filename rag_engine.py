@@ -34,7 +34,7 @@ def get_rag_chain():
     groq_key = os.getenv("GROQ_API_KEY")
 
     if groq_key:
-        llm = ChatGroq(model_name="llama-3.3-70b-versatile", temperature=0.7)
+        llm = ChatGroq(model_name="llama-3.1-8b-instant", temperature=0.7)
     elif google_key:
         llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.7)
     else:
