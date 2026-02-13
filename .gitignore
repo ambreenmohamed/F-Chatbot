@@ -2,7 +2,7 @@
 .env
 
 # Chat data (private)
-*.txt
+WhatsApp*.txt
 
 # Debug and test scripts
 debug_*.py
