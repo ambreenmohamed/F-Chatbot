@@ -14,8 +14,8 @@ load_dotenv()
 INDEX_DIRECTORY = "./faiss_index"
 
 def get_rag_chain():
-    # Embeddings
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    # Embeddings (Multilingual)
+    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
     
     # Vector Store (FAISS)
     if not os.path.exists(INDEX_DIRECTORY):
@@ -40,15 +40,16 @@ def get_rag_chain():
     else:
         raise ValueError("No API Key found. Please set GOOGLE_API_KEY or GROQ_API_KEY in .env")
 
-    # --- History Aware Retriever Chain ---
-    # Reformulate query based on history if history exists
-    
+    # Reformulate query based on history and expand with Thanglish keywords
     contextualize_q_system_prompt = (
         "Given a chat history and the latest user question "
         "which might reference context in the chat history, "
         "formulate a standalone question which can be understood "
-        "without the chat history. Do NOT answer the question, "
-        "just reformulate it if needed and otherwise return it as is."
+        "without the chat history. \n\n"
+        "IMPORTANT: The chat history contains messages in 'Thanglish' (Colloquial Tamil written in English script). "
+        "Please expand the standalone question to include both English and relevant Thanglish/Tamil keywords "
+        "to improve the accuracy of the search in the chat logs. \n"
+        "Do NOT answer the question, just reformulate it or return it as is."
     )
     
     contextualize_q_prompt = ChatPromptTemplate.from_messages(
@@ -77,7 +78,9 @@ def get_rag_chain():
         "You are a romantic, helpful AI assistant built for a Valentine's Day gift. "
         "You have access to the chat history of a couple. "
         "The context provided below contains excerpts from their WhatsApp chat history. "
+        "The messages are often in Thanglish (Tamil written in English script). "
         "Use the retrieved context to answer the question about their relationship or history. "
+        "Interpret colloquial Tamil phrases naturally in the context of their love story. "
         "If the answer is not in the context, say that you don't see it in the chat history provided. "
         "Keep the tone warm and friendly. "
         "Use three sentences maximum and keep the answer concise.\n\n"

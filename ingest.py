@@ -105,8 +105,8 @@ def ingest_data():
         return
 
     # Embeddings
-    print("Initializing Embeddings (HuggingFace)...")
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    print("Initializing Embeddings (Multilingual)...")
+    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
     
     # Vector Store
     print("Creating FAISS Index...")
