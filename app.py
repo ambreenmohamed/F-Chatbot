@@ -76,6 +76,7 @@ st.markdown("""
         .stChatMessage {
             padding: 8px !important;
             font-size: 0.9rem !important;
+            color: #333333 !important;
         }
         
         .stChatInput {
@@ -85,6 +86,11 @@ st.markdown("""
         /* Ensure sidebar doesn't take too much space on mobile */
         [data-testid="stSidebar"] {
             min-width: 250px !important;
+        }
+        
+        /* Fix text color in chat messages */
+        .stChatMessage p, .stChatMessage div {
+            color: #333333 !important;
         }
     }
     
@@ -97,6 +103,12 @@ st.markdown("""
         .stChatMessage {
             padding: 6px !important;
             font-size: 0.85rem !important;
+            color: #333333 !important;
+        }
+        
+        /* Fix text color in chat messages */
+        .stChatMessage p, .stChatMessage div {
+            color: #333333 !important;
         }
     }
 </style>
